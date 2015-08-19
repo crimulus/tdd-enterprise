@@ -1,10 +1,12 @@
 describe("Shields", function() {
 
   var shields;
+  var ship;
   var defaultEnergyLevel = 4000;
 
   beforeEach(function() {
-    shields = new Shields(new Ship(new Game()));
+    ship = new Ship(new Game());
+    shields = new Shields(ship);
   });
 
   it("are down by default", function() {
@@ -58,5 +60,11 @@ describe("Shields", function() {
   it('should not surpass max', function(){
     shields.transferEnergy(shields.maxEnergyLevel + 1);
     expect(shields.getEnergyLevel()).toEqual(shields.maxEnergyLevel);
+  });
+
+  it('should take energy from ship during transfer', function(){
+    var shipStartingReserves = ship.energyReserves;
+    shields.transferEnergy(500);
+    expect(ship.energyReserves).toEqual(shipStartingReserves - 500);
   });
 });

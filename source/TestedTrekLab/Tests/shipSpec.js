@@ -67,10 +67,22 @@ describe("ship", function() {
       ship.addSubsystem(subsystem1);
       ship.addSubsystem(subsystem2);
       subsystem1.numberOfDaysToRecover = 3;
-      subsystem1.numberOfDaysToRecover = 3;
+      subsystem2.numberOfDaysToRecover = 3;
       game.rest(3);
       expect(subsystem1.numberOfDaysToRecover).toBe(0);
       expect(subsystem2.numberOfDaysToRecover).toBe(0);
+    });
+
+    it("should repair over and under damaged systems during game rest", function () {
+      var subsystem1 = new Subsystem();
+      var subsystem2 = new Subsystem();
+      ship.addSubsystem(subsystem1);
+      ship.addSubsystem(subsystem2);
+      subsystem1.numberOfDaysToRecover = 2;
+      subsystem2.numberOfDaysToRecover = 4;
+      game.rest(3);
+      expect(subsystem1.numberOfDaysToRecover).toBe(0);
+      expect(subsystem2.numberOfDaysToRecover).toBe(1);
     });
 
   });

@@ -43,8 +43,9 @@ function Shields(ship) {
       var overcharge = (energyLevel + energy) - self.maxEnergyLevel;
       energy -= overcharge;
     }
-    
-    energyLevel += energy;
+
+    var takenEnergy = self.ship.takeEnergy(energy);
+    energyLevel += takenEnergy;
   }
 
   return self;
