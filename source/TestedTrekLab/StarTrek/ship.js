@@ -15,6 +15,13 @@ function Ship(game){
   };
 
   self.takeEnergy = function (amount) {
+    if (amount > (self.energyReserves - 100)) {
+      amount = self.energyReserves - 100;
+    }
+    if (amount < 0) {
+      amount = 0;
+    }
+    self.energyReserves -= amount;
     return amount;
   };
 
