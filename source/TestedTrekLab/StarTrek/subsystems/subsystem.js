@@ -19,5 +19,9 @@ function Subsystem() {
         }
     }
 
+    self.takeHit = function(energyLevel) {
+        self.numberOfDaysToRecover += Math.floor(energyLevel/self.minEnergyToCauseDamage);
+    }
+
     return self;
 };
