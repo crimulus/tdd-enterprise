@@ -1,14 +1,13 @@
-function Shield() {
+function Subsystem() {
     var self = this;
-    self.shieldsRaised = false;
-    self.energyLevel = 4000;
+    self.numberOfDaysToRecover = 0;
 
-    self.isUp = function() {
-      return self.shieldsRaised;
+    self.isDamaged = function() {
+        return self.numberOfDaysToRecover !== 0;
     }
 
-    self.getEnergyLevel = function() {
-      return self.energyLevel;
+    self.daysToRecover = function() {
+        return self.numberOfDaysToRecover;
     }
 
     return self;
