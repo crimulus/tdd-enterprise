@@ -17,13 +17,15 @@ function Ship(game){
     return amount;
   };
 
-/*
-  game.addRestListener(function () {
+  game.addRestListener(function (daysRested) {
     for (var i in self.subsystems) {
       var subsystem = self.subsystems[i];
+      subsystem.numberOfDaysToRecover -= daysRested;
+      if (subsystem.numberOfDaysToRecover <= 0) {
+        subsystem.numberOfDaysToRecover = 0;
+      }
     }
   });
-*/
 
   return self;
 

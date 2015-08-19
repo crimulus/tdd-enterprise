@@ -8,7 +8,7 @@ function Game(){
   self.rest = function (daysToRest) {
     self.lapsedTime += daysToRest;
     for (var i in restListeners) {
-      restListeners[i]();
+      restListeners[i](daysToRest);
     };
   };
 
