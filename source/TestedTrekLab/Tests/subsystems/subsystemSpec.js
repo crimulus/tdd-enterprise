@@ -3,17 +3,12 @@ describe("Subsystem", function() {
   var subsystem;
 
   beforeEach(function() {
-      subsystem = new Subsystem();
+    subsystem = new Subsystem();
   });
 
   describe("damage assessment", function(){
     it("should be undamaged by default", function() {
       expect(subsystem.isDamaged()).toBe(false);
-    });
-
-    it("should be damaged if more than one day to recover", function() {
-      subsystem.numberOfDaysToRecover = 1;
-      expect(subsystem.isDamaged()).toBe(true);
     });
   });
 

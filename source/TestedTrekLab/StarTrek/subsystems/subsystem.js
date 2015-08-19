@@ -1,27 +1,27 @@
 function Subsystem() {
   var self = this;
-  self.numberOfDaysToRecover = 0;
+  var numberOfDaysToRecover = 0;
   self.minEnergyToCauseDamage;
 
   self.isDamaged = function() {
-    return self.numberOfDaysToRecover !== 0;
+    return numberOfDaysToRecover !== 0;
   }
 
   self.daysToRecover = function() {
-    return self.numberOfDaysToRecover;
+    return numberOfDaysToRecover;
   }
 
   self.repair = function(daysToRecover) {
-    if (self.numberOfDaysToRecover <= daysToRecover) {
-      self.numberOfDaysToRecover = 0;
+    if (numberOfDaysToRecover <= daysToRecover) {
+      numberOfDaysToRecover = 0;
     } else {
-      self.numberOfDaysToRecover -= daysToRecover;
+      numberOfDaysToRecover -= daysToRecover;
     }
   }
 
   self.takeHit = function(energyLevel) {
     if (!isNaN(energyLevel)) {
-      self.numberOfDaysToRecover += Math.floor(energyLevel / self.minEnergyToCauseDamage);
+      numberOfDaysToRecover += Math.floor(energyLevel / self.minEnergyToCauseDamage);
     }
   }
 
