@@ -19,5 +19,9 @@ describe("Subsystem", function() {
         expect(subsystem.isDamaged()).toBe(true);
     });
 
+    it("tests if undamaged subsystem is not repaired (does not go negative)", function() {
+        subsystem.repair(1);
+        expect(subsystem.daysToRecover()).toBe(0);
+    });
 
 });
