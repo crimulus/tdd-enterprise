@@ -1,6 +1,5 @@
 function ShieldGenerator() {
-  var self = new Subsystem();
-  self.minEnergyToCauseDamage = 500;
+  var self = new Subsystem(500);
 
   return self;
 };

@@ -4,15 +4,10 @@ function Ship(game){
 
   //Variables
   self.energyReserves = 20000;
-  self.subsystems = [];
+  self.phaser = new Phaser();
+  self.warpEngine = new WarpEngine();
+  self.shieldGenerator = new ShieldGenerator();
   self.shields = new Shields(this);
-
-  self.addSubsystem = function (subsystem) {
-    if (subsystem.constructor.name !== 'Subsystem') {
-      throw new Error('Passed subsystem is not a subsystem');
-    }
-    self.subsystems.push(subsystem);
-  };
 
   self.takeEnergy = function (amount) {
     if (amount > (self.energyReserves - 100)) {
@@ -26,13 +21,9 @@ function Ship(game){
   };
 
   game.addRestListener(function (daysRested) {
-    for (var i in self.subsystems) {
-      var subsystem = self.subsystems[i];
-      subsystem.repair(daysRested);
-      if (subsystem.numberOfDaysToRecover <= 0) {
-        subsystem.numberOfDaysToRecover = 0;
-      }
-    }
+    self.phaser.repair(daysRested);
+    self.warpEngine.repair(daysRested);
+    self.shieldGenerator.repair(daysRested);
   });
 
   return self;

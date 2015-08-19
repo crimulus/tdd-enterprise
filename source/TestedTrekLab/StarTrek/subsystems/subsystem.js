@@ -4,13 +4,13 @@ function Subsystem(minEnergyToCauseDamage) {
   var numberOfDaysToRecover = 0;
 
   if (!minEnergyToCauseDamage) {
-    throw new Exception('Missing min energy');
+    throw new Error('Missing min energy');
   }
   else if( isNaN(minEnergyToCauseDamage) ){
-    throw new Exception('Non-numeric min energy specified');
+    throw new Error('Non-numeric min energy specified');
   }
   else if( minEnergyToCauseDamage <= 0 ){
-    throw new Exception('Zero or negative min energy specified');
+    throw new Error('Zero or negative min energy specified');
   }
 
   self.isDamaged = function() {

@@ -12,29 +12,20 @@ describe("ship", function() {
     expect(ship.energyReserves).toEqual(20000);
   });
 
-  describe("subsystems", function () {
+  it("should have phaser subsystem", function() {
+    expect(ship.phaser).not.toBeNull();
+  });
 
-    it("should have an array of subsystems", function() {
-      expect(ship.subsystems.length).toBe(0);
-    });
+  it("should have warp engine subsystem", function() {
+    expect(ship.warpEngine).not.toBeNull();
+  });
 
-    it("should expose a method to add new subsystems", function () {
-      expect(typeof ship.addSubsystem).toBe('function');
-    });
+  it("should have shield generator subsystem", function() {
+    expect(ship.shieldGenerator).not.toBeNull();
+  });
 
-    it("should add a subsystem to the array of subsystems", function () {
-      var subsystem = new Subsystem(500);
-      ship.addSubsystem(subsystem);
-      expect(ship.subsystems.length).toBe(1);
-      expect(ship.subsystems.indexOf(subsystem)).toBe(0);
-    });
-
-    it("should throw an error if I try to add a subsystem that is not a subsystem", function () {
-      expect(function () {
-        ship.addSubsystem('Spock wuz here');
-      }).toThrow();
-    });
-
+  it("should have shields", function() {
+    expect(ship.shields).not.toBeNull();
   });
 
   describe("energy transfer", function () {
@@ -62,27 +53,23 @@ describe("ship", function() {
   describe("rest", function () {
 
     it("should repair all subsystems during game rest", function () {
-      var subsystem1 = new Subsystem(200);
-      var subsystem2 = new Subsystem(400);
-      ship.addSubsystem(subsystem1);
-      ship.addSubsystem(subsystem2);
-      subsystem1.takeHit(600);
-      subsystem2.takeHit(1200);
-      game.rest(3);
-      expect(subsystem1.daysToRecover()).toBe(0);
-      expect(subsystem2.daysToRecover()).toBe(0);
+      ship.phaser.takeHit(600);
+      ship.warpEngine.takeHit(400);
+      ship.shieldGenerator.takeHit(1000);
+      game.rest(2);
+      expect(ship.phaser.daysToRecover()).toBe(0);
+      expect(ship.warpEngine.daysToRecover()).toBe(0);
+      expect(ship.shieldGenerator.daysToRecover()).toBe(0);
     });
 
     it("should repair over and under damaged systems during game rest", function () {
-      var subsystem1 = new Subsystem(200);
-      var subsystem2 = new Subsystem(400);
-      ship.addSubsystem(subsystem1);
-      ship.addSubsystem(subsystem2);
-      subsystem1.takeHit(400);
-      subsystem2.takeHit(1600);
-      game.rest(3);
-      expect(subsystem1.daysToRecover()).toBe(0);
-      expect(subsystem2.daysToRecover()).toBe(1);
+      ship.phaser.takeHit(900);
+      ship.warpEngine.takeHit(400);
+      ship.shieldGenerator.takeHit(1000);
+      game.rest(2);
+      expect(ship.phaser.daysToRecover()).toBe(1);
+      expect(ship.warpEngine.daysToRecover()).toBe(0);
+      expect(ship.shieldGenerator.daysToRecover()).toBe(0);;
     });
 
   });
