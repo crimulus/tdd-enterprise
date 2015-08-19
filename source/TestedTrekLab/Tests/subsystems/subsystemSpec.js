@@ -3,7 +3,15 @@ describe("Subsystem", function() {
   var subsystem;
 
   beforeEach(function() {
-    subsystem = new Subsystem();
+    subsystem = new Subsystem(500);
+  });
+
+  describe("invalid construction", function () {
+    it('should throw an error if a Subsystem is constructed without a minEnergyToCauseDamage', function () {
+      expect(function () {
+        var subsystemWithNoMinEnergy = new Subsystem();
+      }).toThrow();
+    });
   });
 
   describe("damage assessment", function(){

@@ -8,12 +8,12 @@ describe("Phaser", function() {
 
   describe("damage assessment", function() {
     it("should not be damaged if hit by energy level below minimum", function () {
-      phaser.takeHit((phaser.minEnergyToCauseDamage - 1));
+      phaser.takeHit(299);
       expect(phaser.isDamaged()).toBe(false);
     });
 
     it("should be damaged for one star day if hit by energy level at minimum", function () {
-      phaser.takeHit(phaser.minEnergyToCauseDamage);
+      phaser.takeHit(300);
       expect(phaser.isDamaged()).toBe(true);
       expect(phaser.daysToRecover()).toBe(1);
     });

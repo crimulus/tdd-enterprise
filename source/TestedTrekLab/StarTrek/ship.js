@@ -28,7 +28,7 @@ function Ship(game){
   game.addRestListener(function (daysRested) {
     for (var i in self.subsystems) {
       var subsystem = self.subsystems[i];
-      subsystem.numberOfDaysToRecover -= daysRested;
+      subsystem.repair(daysRested);
       if (subsystem.numberOfDaysToRecover <= 0) {
         subsystem.numberOfDaysToRecover = 0;
       }

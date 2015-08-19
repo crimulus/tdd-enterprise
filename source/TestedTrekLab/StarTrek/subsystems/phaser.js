@@ -1,7 +1,5 @@
 function Phaser() {
-  var self = new Subsystem();
-  self.minEnergyToCauseDamage = 300;
+  var self = new Subsystem(300);
 
   return self;
 };
-

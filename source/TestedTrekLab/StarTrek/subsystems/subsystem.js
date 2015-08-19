@@ -1,7 +1,11 @@
-function Subsystem() {
+function Subsystem(minEnergyToCauseDamage) {
+
   var self = this;
   var numberOfDaysToRecover = 0;
-  self.minEnergyToCauseDamage;
+
+  if (!minEnergyToCauseDamage) {
+    throw new Exception('invalid min energy');
+  }
 
   self.isDamaged = function() {
     return numberOfDaysToRecover !== 0;
@@ -21,7 +25,7 @@ function Subsystem() {
 
   self.takeHit = function(energyLevel) {
     if (!isNaN(energyLevel)) {
-      numberOfDaysToRecover += Math.floor(energyLevel / self.minEnergyToCauseDamage);
+      numberOfDaysToRecover += Math.floor(energyLevel / minEnergyToCauseDamage);
     }
   }
 
