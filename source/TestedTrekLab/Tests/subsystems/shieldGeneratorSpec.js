@@ -1,21 +1,22 @@
 describe("ShieldGenerator", function() {
 
-    var shieldGenerator;
+  var shieldGenerator;
 
-    beforeEach(function() {
-      shieldGenerator = new ShieldGenerator();
-    });
+  beforeEach(function() {
+    shieldGenerator = new ShieldGenerator();
+  });
 
-    it("tests if shield generator subsystem is not damaged by hit", function() {
-      shieldGenerator.takeHit(499);
+  describe("damage assessment", function(){
+    it("should not be damaged if hit by energy level below minimum", function() {
+      shieldGenerator.takeHit((shieldGenerator.minEnergyToCauseDamage - 1));
       expect(shieldGenerator.isDamaged()).toBe(false);
     });
 
-    it("tests if shield generator subsystem is damaged by hit for 1 star day", function() {
-      shieldGenerator.takeHit(500);
+    it("should be damaged for one star day if hit by energy level at minimum", function() {
+      shieldGenerator.takeHit(shieldGenerator.minEnergyToCauseDamage);
       expect(shieldGenerator.isDamaged()).toBe(true);
       expect(shieldGenerator.daysToRecover()).toBe(1);
     });
-
+  });
 
 });
