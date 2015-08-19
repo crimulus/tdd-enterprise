@@ -2,19 +2,23 @@ function Shield() {
   var self = this;
 
   //private
-  var shieldsRaised = false;
+  var isRaised = false;
   var energyLevel = 4000;
 
   //public
   self.minEnergyLevel = 0;
   self.maxEnergyLevel = 10000;
 
-  self.isUp = function() {
-    return shieldsRaised;
+  self.isRaised = function() {
+    return isRaised;
   }
 
   self.getEnergyLevel = function() {
     return energyLevel;
+  }
+
+  self.setRaised = function (raised){
+    isRaised = raised;
   }
 
   return self;
