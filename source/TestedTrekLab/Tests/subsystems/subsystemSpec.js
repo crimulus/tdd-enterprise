@@ -15,9 +15,9 @@ describe("Subsystem", function() {
       }).toThrow();
     });
 
-    it('should throw an error if a Subsystem is constructed with a minEnergyToCauseDamage that is less than zero', function () {
+    it('should throw an error if a Subsystem is constructed with a minEnergyToCauseDamage that is less than or equal to zero', function () {
       expect(function () {
-        var subsystemWithNegativeMinEnergy = new Subsystem(-1);
+        var subsystemWithNegativeMinEnergy = new Subsystem(0);
       }).toThrow();
     });
   });

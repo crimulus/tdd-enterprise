@@ -9,8 +9,8 @@ function Subsystem(minEnergyToCauseDamage) {
   else if( isNaN(minEnergyToCauseDamage) ){
     throw new Exception('Non-numeric min energy specified');
   }
-  else if( minEnergyToCauseDamage < 0 ){
-    throw new Exception('Negative min energy specified');
+  else if( minEnergyToCauseDamage <= 0 ){
+    throw new Exception('Zero or negative min energy specified');
   }
 
   self.isDamaged = function() {
