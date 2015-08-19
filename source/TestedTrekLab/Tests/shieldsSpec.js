@@ -4,7 +4,7 @@ describe("Shields", function() {
   var defaultEnergyLevel = 4000;
 
   beforeEach(function() {
-    shields = new Shield();
+    shields = new Shields();
   });
 
   it("are down by default", function() {
@@ -49,4 +49,5 @@ describe("Shields", function() {
     expect(shields.getEnergyLevel()).toEqual(0);
     expect(unabsorbedDamage).toEqual(1);
   });
+
 });

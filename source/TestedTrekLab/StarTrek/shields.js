@@ -1,4 +1,4 @@
-function Shield() {
+function Shields() {
   var self = this;
 
   //private
