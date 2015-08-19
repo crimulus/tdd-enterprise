@@ -1,4 +1,4 @@
-function Shields() {
+function Shields(ship) {
   var self = this;
 
   //private
@@ -8,6 +8,7 @@ function Shields() {
   //public
   self.minEnergyLevel = 0;
   self.maxEnergyLevel = 10000;
+  self.ship = ship;
 
   self.isRaised = function() {
     return isRaised;
@@ -35,6 +36,15 @@ function Shields() {
       }
     }
     return unabsorbedDamage;
+  }
+
+  self.transferEnergy = function(energy){
+    if((energyLevel + energy) > self.maxEnergyLevel){
+      var overcharge = (energyLevel + energy) - self.maxEnergyLevel;
+      energy -= overcharge;
+    }
+    var takenEnergy = self.ship.takeEnergy(energy);
+    energyLevel += takenEnergy;
   }
 
   return self;

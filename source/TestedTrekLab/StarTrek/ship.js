@@ -5,7 +5,7 @@ function Ship(game){
   //Variables
   self.energyReserves = 20000;
   self.subsystems = [];
-  self.shields = new Shields();
+  self.shields = new Shields(this);
 
   self.addSubsystem = function (subsystem) {
     if (subsystem.constructor.name !== 'Subsystem') {
