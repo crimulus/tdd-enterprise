@@ -20,6 +20,25 @@ function Ship(game){
     return amount;
   };
 
+  self.damage = function(damage){
+    var uncoveredDamage = self.shields.damage(damage);
+    if(uncoveredDamage > 0){
+      self.selectRandomSubsystem().takeHit(uncoveredDamage);
+    }
+  }
+
+  self.selectRandomSubsystem = function () {
+    var randomValue = Math.random();
+
+    if(randomValue < .3333){
+      return self.phaser;
+    } else if(randomValue < .6666){
+      return self.warpEngine;
+    } else{
+      return self.shieldGenerator;
+    }
+  }
+
   game.addRestListener(function (daysRested) {
     self.phaser.repair(daysRested);
     self.warpEngine.repair(daysRested);

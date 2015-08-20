@@ -50,6 +50,78 @@ describe("ship", function() {
 
   });
 
+  describe("damage", function(){
+
+    var originalRandom;
+
+    beforeEach(function(){
+      originalRandom = Math.random;
+    });
+
+    afterEach(function () {
+      Math.random = originalRandom;
+    });
+
+    it("should take damage to the shields first if up", function(){
+      function stubTakeHit (){
+        throw new Error("Subsystem shouldn't be damaged with shields covering hit!");
+      }
+
+      ship.phaser.takeHit = stubTakeHit;
+      ship.shieldGenerator.takeHit = stubTakeHit;
+      ship.warpEngine.takeHit = stubTakeHit;
+
+      var startingShieldsEnergy = ship.shields.getEnergyLevel();
+      ship.shields.setRaised(true);
+      ship.damage(500);
+      expect(ship.shields.getEnergyLevel()).toEqual(startingShieldsEnergy - 500);
+    });
+
+    it("should drain shields if damage surpasses shield energy level and attempt to damage subsystem with remaining damage", function(){
+      var takeHitCalls = 0;
+      var takeHitDamageParam = -1;
+      function stubTakeHit (damage) {
+        takeHitCalls++;
+        takeHitDamageParam = damage;
+      }
+
+      ship.phaser.takeHit = stubTakeHit;
+      ship.warpEngine.takeHit = stubTakeHit;
+      ship.shieldGenerator.takeHit = stubTakeHit;
+
+      var startingShieldsEnergy = ship.shields.getEnergyLevel();
+      ship.shields.setRaised(true);
+      ship.damage(startingShieldsEnergy + 500);
+      expect(ship.shields.getEnergyLevel()).toEqual(0);
+      expect(takeHitCalls).toEqual(1);
+      expect(takeHitDamageParam).toEqual(500);
+    });
+
+    it("should damage a different random subsystem as Math.random varies", function () {
+      var randomReturn;
+      Math.random = function () {
+        return randomReturn;
+      }
+
+      spyOn(ship.phaser, "takeHit");
+      spyOn(ship.warpEngine, "takeHit");
+      spyOn(ship.shieldGenerator, "takeHit");
+
+      randomReturn = 0;
+      ship.damage(500);
+      expect(ship.phaser.takeHit).toHaveBeenCalled();
+
+      randomReturn = 0.5;
+      ship.damage(500);
+      expect(ship.warpEngine.takeHit).toHaveBeenCalled();
+
+      randomReturn = 0.8;
+      ship.damage(500);
+      expect(ship.shieldGenerator.takeHit).toHaveBeenCalled();
+    });
+
+  });
+
   describe("rest", function () {
 
     it("should repair all subsystems during game rest", function () {
