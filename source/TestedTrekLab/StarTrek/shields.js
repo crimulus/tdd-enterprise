@@ -18,8 +18,10 @@ function Shields(ship) {
     return energyLevel;
   }
 
-  self.setRaised = function (raised){
-    isRaised = raised;
+  self.setRaised = function (raised) {
+    if (!ship.shieldGenerator.isDamaged()) {
+      isRaised = raised;
+    }
   }
 
   self.damage = function(damage){
@@ -39,13 +41,15 @@ function Shields(ship) {
   }
 
   self.transferEnergy = function(energy){
-    if((energyLevel + energy) > self.maxEnergyLevel){
-      var overcharge = (energyLevel + energy) - self.maxEnergyLevel;
-      energy -= overcharge;
-    }
+    if (!ship.shieldGenerator.isDamaged()) {
+      if ((energyLevel + energy) > self.maxEnergyLevel) {
+        var overcharge = (energyLevel + energy) - self.maxEnergyLevel;
+        energy -= overcharge;
+      }
 
-    var takenEnergy = self.ship.takeEnergy(energy);
-    energyLevel += takenEnergy;
+      var takenEnergy = self.ship.takeEnergy(energy);
+      energyLevel += takenEnergy;
+    }
   }
 
   return self;

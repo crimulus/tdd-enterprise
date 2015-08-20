@@ -9,6 +9,10 @@ describe("Shields", function() {
     shields = new Shields(ship);
   });
 
+  it("have a reference to a ship", function() {
+    expect(shields.ship).not.toBeNull();
+  });
+
   it("are down by default", function() {
     expect(shields.isRaised()).toBe(false);
   });
@@ -32,10 +36,23 @@ describe("Shields", function() {
     expect(shields.isRaised()).toBe(false);
   });
 
+  it('cannot be raised if shield generator is damaged', function(){
+    shields.ship.shieldGenerator.takeHit(shields.ship.shieldGenerator.minimumEnergyToCauseDamage());
+    shields.setRaised(true);
+    expect(shields.isRaised()).toBe(false);
+  });
+
+  it('can be raised if shield generator is damaged and subsequently repaired', function(){
+    shields.ship.shieldGenerator.takeHit(shields.ship.shieldGenerator.minimumEnergyToCauseDamage());
+    shields.ship.shieldGenerator.repair(1);
+    shields.setRaised(true);
+    expect(shields.isRaised()).toBe(true);
+  });
+
   it('should not be damaged if shields are not up', function(){
-    var unabsorbedDamage = shields.damage(500);
+    var unabsorbedDamage = shields.damage(shields.ship.shieldGenerator.minimumEnergyToCauseDamage());
     expect(shields.getEnergyLevel()).toEqual(defaultEnergyLevel);
-    expect(unabsorbedDamage).toEqual(500);
+    expect(unabsorbedDamage).toEqual(shields.ship.shieldGenerator.minimumEnergyToCauseDamage());
   });
 
   it('should absorb damage if shields are up', function(){
@@ -67,4 +84,25 @@ describe("Shields", function() {
     shields.transferEnergy(500);
     expect(ship.energyReserves).toEqual(shipStartingReserves - 500);
   });
+
+  it('cannot transfer energy if shield generator is damaged', function(){
+    var shipStartingReserves = ship.energyReserves;
+    shields.ship.shieldGenerator.takeHit(shields.ship.shieldGenerator.minimumEnergyToCauseDamage());
+    var shieldsBeginningLevel = shields.getEnergyLevel();
+    shields.transferEnergy(500);
+    expect(shields.getEnergyLevel()).toEqual(shieldsBeginningLevel);
+    expect(ship.energyReserves).toEqual(shipStartingReserves);
+  });
+
+  it('can transfer energy if shield generator is damaged and subsequently repaired', function(){
+    var shipStartingReserves = ship.energyReserves;
+    shields.ship.shieldGenerator.takeHit(shields.ship.shieldGenerator.minimumEnergyToCauseDamage());
+    shields.ship.shieldGenerator.repair(1);
+    var shieldsBeginningLevel = shields.getEnergyLevel();
+    shields.transferEnergy(500);
+    expect(shields.getEnergyLevel()).toEqual(shieldsBeginningLevel+500);
+    expect(ship.energyReserves).toEqual(shipStartingReserves-500);
+  });
+
+
 });

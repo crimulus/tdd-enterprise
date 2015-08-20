@@ -1,9 +1,10 @@
 function Subsystem(minEnergyToCauseDamage) {
 
   var self = this;
-  var numberOfDaysToRecover = 0;
+  var _numberOfDaysToRecover = 0;
+//  var _minEnergyToCauseDamage = minEnergyToCauseDamage;
 
-  if (!minEnergyToCauseDamage) {
+  if( !minEnergyToCauseDamage ){
     throw new Error('Missing min energy');
   }
   else if( isNaN(minEnergyToCauseDamage) ){
@@ -14,25 +15,29 @@ function Subsystem(minEnergyToCauseDamage) {
   }
 
   self.isDamaged = function() {
-    return numberOfDaysToRecover !== 0;
+    return _numberOfDaysToRecover !== 0;
   }
 
   self.daysToRecover = function() {
-    return numberOfDaysToRecover;
+    return _numberOfDaysToRecover;
   }
 
   self.repair = function(daysToRecover) {
-    if (numberOfDaysToRecover <= daysToRecover) {
-      numberOfDaysToRecover = 0;
+    if (_numberOfDaysToRecover <= daysToRecover) {
+      _numberOfDaysToRecover = 0;
     } else {
-      numberOfDaysToRecover -= daysToRecover;
+      _numberOfDaysToRecover -= daysToRecover;
     }
   }
 
   self.takeHit = function(energyLevel) {
     if (!isNaN(energyLevel)) {
-      numberOfDaysToRecover += Math.floor(energyLevel / minEnergyToCauseDamage);
+      _numberOfDaysToRecover += Math.floor(energyLevel / minEnergyToCauseDamage);
     }
+  }
+
+  self.minimumEnergyToCauseDamage = function(){
+    return minEnergyToCauseDamage;
   }
 
   return self;
