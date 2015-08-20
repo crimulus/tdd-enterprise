@@ -32,7 +32,7 @@ function Subsystem(ship, minEnergyToCauseDamage) {
 
   self.takeHit = function(energyLevel) {
     if (!self.ship.isDocked && !isNaN(energyLevel)) {
-      numberOfDaysToRecover += Math.floor(energyLevel / minEnergyToCauseDamage);
+      _numberOfDaysToRecover += Math.floor(energyLevel / minEnergyToCauseDamage);
     }
   }
 

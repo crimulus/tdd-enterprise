@@ -221,6 +221,13 @@ describe("ship", function() {
       expect(ship.shieldGenerator.daysToRecover()).toBe(0);
     });
 
+    it("should not take shield damage when attacked", function () {
+      var startingShieldsEnergy = ship.shields.getEnergyLevel();
+      ship.move(1,0);
+      ship.dock()
+      ship.damage(500);
+      expect(ship.shields.getEnergyLevel()).toEqual(startingShieldsEnergy);
+    });
   });
 
 });
