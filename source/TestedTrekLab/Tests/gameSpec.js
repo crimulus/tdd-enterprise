@@ -34,4 +34,35 @@ describe("game", function() {
     expect(called).toBe(true);
   });
 
+  it("should have a multi-dimensional 10x10 array as quadrant", function () {
+    expect(Array.isArray(game.quadrant)).toBe(true);
+    expect(game.quadrant.length).toBe(10);
+
+    for(i in game.quadrant) {
+      expect(game.quadrant[i].length).toBe(10);
+    }
+  });
+
+  describe("Game initialization", function () {
+
+    it("should have a 2D array as [x,y] in quadrant", function () {
+      expect(Array.isArray(game.ship.quadrantLoc)).toBe(true);
+      expect(game.ship.quadrantLoc.length).toBe(2);
+    });
+
+    it("should set ship initial position to [0,0]", function () {
+      expect(game.ship.quadrantLoc).toEqual([1,0]);
+    });
+
+    it("should add itself to the game quadrant", function () {
+      expect(game.quadrant[1][0]).toEqual(game.ship);
+    });
+
+    it("should have quadrant object", function () {
+      expect(Array.isArray(game.base)).toBe(true);
+      expect(game.base.length).toBe(2);
+    });
+
+  });
+
 });
