@@ -3,7 +3,8 @@ describe("WarpEngine", function() {
   var warpEngine;
 
   beforeEach(function() {
-    warpEngine = new WarpEngine();
+    var ship = {isDocked: false};
+    warpEngine = new WarpEngine(ship);
   });
 
   describe("damage assessment", function() {

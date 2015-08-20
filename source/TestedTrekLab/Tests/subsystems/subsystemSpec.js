@@ -24,7 +24,8 @@ describe("Subsystem", function() {
 
   describe("Basics", function() {
     beforeEach(function () {
-      subsystem = new Subsystem(500);
+      var ship = {isDocked: false};
+      subsystem = new Subsystem(ship, 500);
     });
 
     describe("damage assessment", function () {

@@ -1,9 +1,11 @@
 describe("game", function() {
 
   var game;
+  var ship;
 
   beforeEach(function() {
     game = new Game();
+    ship = new Ship(game);
   });
 
   it("should have zero lapsed time", function() {
@@ -45,22 +47,46 @@ describe("game", function() {
 
   describe("Game initialization", function () {
 
+    beforeEach(function() {
+      game.ship = null;
+    });
+
+    it("should add ship to game object", function () {
+      game.addShip(ship);
+      expect(game.ship).toEqual(ship);
+    });
+
+    it("should throw an error if param passed to addShip is not of type Ship", function () {
+      expect(function () {
+        game.addShip("IT'S A TRAP")
+      }).toThrow();
+    });
+
     it("should have a 2D array as [x,y] in quadrant", function () {
+      game.addShip(ship);
       expect(Array.isArray(game.ship.quadrantLoc)).toBe(true);
       expect(game.ship.quadrantLoc.length).toBe(2);
     });
 
     it("should set ship initial position to [0,0]", function () {
+      game.addShip(ship);
       expect(game.ship.quadrantLoc).toEqual([1,0]);
     });
 
     it("should add itself to the game quadrant", function () {
+      game.addShip(ship);
       expect(game.quadrant[1][0]).toEqual(game.ship);
     });
 
-    it("should have quadrant object", function () {
+    it("should have base member as array", function () {
+      game.addShip(ship);
       expect(Array.isArray(game.base)).toBe(true);
       expect(game.base.length).toBe(2);
+    });
+
+    it("should add ship to game quadrant", function () {
+      game.addShip(ship);
+      expect(game.quadrant[1][0]).toEqual(game.ship);
     });
 
   });

@@ -4,10 +4,12 @@ function Ship(game){
 
   //Variables
   self.energyReserves = 20000;
-  self.phaser = new Phaser();
-  self.warpEngine = new WarpEngine();
-  self.shieldGenerator = new ShieldGenerator();
+  self.phaser = new Phaser(self);
+  self.warpEngine = new WarpEngine(self);
+  self.shieldGenerator = new ShieldGenerator(self);
+  self.quadrantLoc = [];
   self.shields = new Shields(this);
+  self.isDocked = false;
 
   self.takeEnergy = function (amount) {
     if (amount > (self.energyReserves - 100)) {
@@ -39,7 +41,21 @@ function Ship(game){
     }
   }
 
+  self.move = function(x,y) {
+    self.quadrantLoc = [x,y];
+  };
+
+  self.dock = function () {
+    if (game.isShipAdjacentToBase()) {
+      self.isDocked = true;
+    }
+  };
+
   game.addRestListener(function (daysRested) {
+    if(self.isDocked) {
+      self.energyReserves = 20000;
+      daysRested *= 3;
+    }
     self.phaser.repair(daysRested);
     self.warpEngine.repair(daysRested);
     self.shieldGenerator.repair(daysRested);

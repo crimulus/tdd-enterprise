@@ -1,8 +1,9 @@
-function Subsystem(minEnergyToCauseDamage) {
+function Subsystem(ship, minEnergyToCauseDamage) {
 
   var self = this;
   var _numberOfDaysToRecover = 0;
 //  var _minEnergyToCauseDamage = minEnergyToCauseDamage;
+  self.ship = ship;
 
   if( !minEnergyToCauseDamage ){
     throw new Error('Missing min energy');
@@ -31,8 +32,8 @@ function Subsystem(minEnergyToCauseDamage) {
   }
 
   self.takeHit = function(energyLevel) {
-    if (!isNaN(energyLevel)) {
-      _numberOfDaysToRecover += Math.floor(energyLevel / minEnergyToCauseDamage);
+    if (!self.ship.isDocked && !isNaN(energyLevel)) {
+      numberOfDaysToRecover += Math.floor(energyLevel / minEnergyToCauseDamage);
     }
   }
 

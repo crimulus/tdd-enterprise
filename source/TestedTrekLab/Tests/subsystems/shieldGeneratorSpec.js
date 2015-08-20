@@ -3,7 +3,8 @@ describe("ShieldGenerator", function() {
   var shieldGenerator;
 
   beforeEach(function() {
-    shieldGenerator = new ShieldGenerator();
+    var ship = {isDocked: false;}
+    shieldGenerator = new ShieldGenerator(ship);
   });
 
   describe("damage assessment", function(){

@@ -3,7 +3,8 @@ describe("Phaser", function() {
   var phaser;
 
   beforeEach(function() {
-      phaser = new Phaser();
+      var ship = {isDocked: false};
+      phaser = new Phaser(ship);
   });
 
   describe("damage assessment", function() {

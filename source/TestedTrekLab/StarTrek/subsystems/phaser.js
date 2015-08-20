@@ -1,5 +1,5 @@
-function Phaser() {
-  var self = new Subsystem(300);
+function Phaser(ship) {
+  var self = new Subsystem(ship, 300);
 
   return self;
 };

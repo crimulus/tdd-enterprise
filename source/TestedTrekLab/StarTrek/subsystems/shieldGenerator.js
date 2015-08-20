@@ -1,5 +1,5 @@
-function ShieldGenerator() {
-  var self = new Subsystem(500);
+function ShieldGenerator(ship) {
+  var self = new Subsystem(ship, 500);
 
   return self;
 };

@@ -6,6 +6,7 @@ describe("ship", function() {
   beforeEach(function() {
     game = new Game();
     ship = new Ship(game);
+    game.addShip(ship);
   });
 
   it("should have energy reserves starting at 20,000", function() {
@@ -142,6 +143,82 @@ describe("ship", function() {
       expect(ship.phaser.daysToRecover()).toBe(1);
       expect(ship.warpEngine.daysToRecover()).toBe(0);
       expect(ship.shieldGenerator.daysToRecover()).toBe(0);;
+    });
+
+  });
+
+  describe("moving", function () {
+
+    it("should start out with default location of [1,0]", function () {
+      expect(ship.quadrantLoc).toEqual([1,0]);
+    });
+
+    it("Should update ship's quadrantLoc to new location on move", function () {
+      ship.move(2,0);
+      expect(ship.quadrantLoc).toEqual([2,0]);
+    });
+
+  });
+
+  describe("docking", function () {
+
+    it("should be able to see if dock is nearby", function () {
+      expect(game.isShipAdjacentToBase()).toBe(true);
+    });
+
+    it("base shouldn't be near if we move away", function () {
+      ship.move(2,0);
+      expect(game.isShipAdjacentToBase()).toBe(false);
+    });
+
+    it("should be able to dock if base is near", function () {
+      ship.move(1,0);
+      ship.dock()
+      expect(ship.isDocked).toBe(true);
+    });
+
+    it("should not be able to dock if no base is nearby", function () {
+      ship.move(2,0);
+      ship.dock()
+      expect(ship.isDocked).toBe(false);
+    });
+
+    it("should resupply energy reserves when docked at base", function () {
+      ship.move(1,0);
+      ship.energyReserves = 100;
+      ship.dock()
+      game.rest(1);
+      expect(ship.energyReserves).toBe(20000);
+    });
+
+    it("docking alone doesn't repair anything", function () {
+      ship.move(1,0);
+      ship.energyReserves = 100;
+      ship.dock()
+      expect(ship.energyReserves).toBe(100);
+    });
+
+    it("should repair over and under damaged systems during game rest", function () {
+      ship.phaser.takeHit(900);
+      ship.warpEngine.takeHit(800);
+      ship.shieldGenerator.takeHit(2000);
+      ship.move(1,0);
+      ship.dock()
+      game.rest(1);
+      expect(ship.phaser.daysToRecover()).toBe(0);
+      expect(ship.warpEngine.daysToRecover()).toBe(1);
+      expect(ship.shieldGenerator.daysToRecover()).toBe(1);
+    });
+
+    it("should should be safe from attack while docked", function () {
+      ship.move(1,0);
+      ship.dock()
+      ship.phaser.takeHit(900);
+      ship.warpEngine.takeHit(1200);
+      ship.shieldGenerator.takeHit(2000);
+      expect(ship.phaser.daysToRecover()).toBe(0);
+      expect(ship.warpEngine.daysToRecover()).toBe(0);
+      expect(ship.shieldGenerator.daysToRecover()).toBe(0);
     });
 
   });

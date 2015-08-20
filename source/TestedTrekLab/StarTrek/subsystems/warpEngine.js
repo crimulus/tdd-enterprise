@@ -1,5 +1,5 @@
-function WarpEngine() {
-  var self = new Subsystem(200);
+function WarpEngine(ship) {
+  var self = new Subsystem(ship, 200);
 
   return self;
 };
