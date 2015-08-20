@@ -2,7 +2,6 @@ function Subsystem(ship, minEnergyToCauseDamage) {
 
   var self = this;
   var _numberOfDaysToRecover = 0;
-//  var _minEnergyToCauseDamage = minEnergyToCauseDamage;
   self.ship = ship;
 
   if( !minEnergyToCauseDamage ){
