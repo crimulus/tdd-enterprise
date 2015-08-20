@@ -23,6 +23,9 @@ function Ship(game){
   };
 
   self.damage = function(damage){
+    if (self.isDocked) {
+      return;
+    }
     var uncoveredDamage = self.shields.damage(damage);
     if(uncoveredDamage > 0){
       self.selectRandomSubsystem().takeHit(uncoveredDamage);

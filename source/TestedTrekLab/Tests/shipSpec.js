@@ -223,6 +223,7 @@ describe("ship", function() {
 
     it("should not take shield damage when attacked", function () {
       var startingShieldsEnergy = ship.shields.getEnergyLevel();
+      ship.shields.setRaised(true)
       ship.move(1,0);
       ship.dock()
       ship.damage(500);
